@@ -17,19 +17,32 @@ const obtenerPosts = async () => {
     console.error(err);
   }
 };
- 
-  const agregarPost = async (titulo, img, descripcion) => {
+
+const agregarPost = async (titulo, img, descripcion) => {
   try {
-    const consulta = "INSERT INTO posts (titulo, img, descripcion) values ( $1, $2, $3)";
+    const consulta =
+      "INSERT INTO posts (titulo, img, descripcion) values ( $1, $2, $3)";
     const valores = [titulo, img, descripcion];
     const result = await pool.query(consulta, valores);
     console.log("post agregado");
   } catch (error) {
     console.log(error);
-  }};   
+  }
+};
 
+const modificarPost = async (likes, id) => {  
+  try {
+    const consulta = "UPDATE posts SET likes = $1 WHERE id = $2";
+    const valores = [likes, id];
+  
+    const result = await pool.query(consulta, valores);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
   obtenerPosts,
   agregarPost,
+  modificarPost
 };
