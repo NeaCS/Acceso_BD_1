@@ -34,7 +34,6 @@ const modificarPost = async (likes, id) => {
   try {
     const consulta = "UPDATE posts SET likes = $1 WHERE id = $2";
     const valores = [likes, id];
-  
     const result = await pool.query(consulta, valores);
   } catch (error) {
     console.log(error);
