@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const { obtenerPosts, agregarPost, modificarPost } = require("./consultas");
+const { obtenerPosts, agregarPost, modificarPost, borrarPost } = require("./consultas");
 
 app.listen(3000, console.log("servidor encendido en el servidor 3001"));
 
@@ -29,6 +29,7 @@ app.post("/posts", async (req, res) => {
 
 app.put("/posts/like/:id", async (req, res) => {
   try {
+    console.log("el body", req.body)
     const { likes } = req.body;
     const { id } = req.params;
     await modificarPost(likes, id);
@@ -37,3 +38,13 @@ app.put("/posts/like/:id", async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+app.delete("/posts/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    await borrarPost(id);
+    res.send("post eliminado");
+  } catch (err) {
+    res.status(500).send(err);
+  }
+})
