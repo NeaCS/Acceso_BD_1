@@ -3,7 +3,7 @@ const app = express();
 const cors = require("cors");
 const { obtenerPosts, agregarPost, modificarPost, borrarPost } = require("./consultas");
 
-app.listen(3000, console.log("servidor encendido en el servidor 3001"));
+app.listen(3000, console.log("servidor encendido en el servidor 3000"));
 
 app.use(cors());
 app.use(express.json());
@@ -29,10 +29,8 @@ app.post("/posts", async (req, res) => {
 
 app.put("/posts/like/:id", async (req, res) => {
   try {
-    console.log("el body", req.body)
-    const { likes } = req.body;
     const { id } = req.params;
-    await modificarPost(likes, id);
+    await modificarPost(id);
     res.send("post modificado");
   } catch (err) {
     res.status(500).send(err);

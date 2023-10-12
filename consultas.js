@@ -21,7 +21,7 @@ const obtenerPosts = async () => {
 const agregarPost = async (titulo, img, descripcion) => {
   try {
     const consulta =
-      "INSERT INTO posts (titulo, img, descripcion) values ( $1, $2, $3)";
+      "INSERT INTO posts (titulo, img, descripcion, likes) values ( $1, $2, $3, 0)";
     const valores = [titulo, img, descripcion];
     const result = await pool.query(consulta, valores);
     console.log("post agregado");
@@ -30,10 +30,10 @@ const agregarPost = async (titulo, img, descripcion) => {
   }
 };
 
-const modificarPost = async (likes, id) => {  
+const modificarPost = async (id) => {  
   try {
-    const consulta = "UPDATE posts SET likes = $1 WHERE id = $2";
-    const valores = [likes, id];
+    const consulta = "UPDATE posts SET likes = likes + 1 WHERE id = $1";
+    const valores = [id];
     const result = await pool.query(consulta, valores);
     console.log("result", result)
   } catch (error) {
@@ -52,9 +52,10 @@ const borrarPost = async (id) => {
   }
 }
 
+
 module.exports = {
   obtenerPosts,
   agregarPost,
   modificarPost,
-  borrarPost
+  borrarPost,
 };
